@@ -21,17 +21,20 @@ int main(void)
 
 	//get the text
 	cout << "Enter text: " << endl;
-	cin >> sentense;
+	getline(cin,sentense);
 	
 	cout << endl << endl;
 
 	//get the word to be removed
 	cout << "Enter word/character to remove: ";
 	string rem;
-	cin >> rem;
+	getline(cin,rem);
 
 	//get the result 
 	string res = manipulateStrigs(sentense, rem);
+
+
+	cout << endl << endl;
 
 	//print original text
 	cout << "Original Text: "<< endl << sentense << endl << endl;
@@ -79,17 +82,14 @@ string manipulateStrigs(const string text, const string remove)
 
 		//if no word was found a single character may have been enetered
 		//look inside every word
-		else if(found_pos = temp.find(remove) != std::string::npos)
+		else if(temp.find(remove) != std::string::npos)
 		{
-			//while a position to remove was found remove it and search again
-			while (found_pos != std::string::npos)
-			{
-				tokens[i].erase(tokens[i].begin() + found_pos);
-				temp.erase(temp.begin() + found_pos);
+			found_pos = temp.find(remove);
 
-				found_pos = temp.find(remove);
-			}
-			
+			tokens[i].erase(tokens[i].begin() + found_pos, tokens[i].begin() + (found_pos+remove.length()));
+			temp.erase(temp.begin() + found_pos, temp.begin() + (found_pos + remove.length()));
+
+			found_pos = std::string::npos;
 		}
 	}
 
